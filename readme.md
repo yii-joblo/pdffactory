@@ -260,8 +260,8 @@ or to be more flexible by assigning the template in the controller action.
         if(isset($_GET['pdf']))
         {
            $productPdf = ProductPdf::doc();
-           $this->setTemplate('productsheet1.pdf', 0, 0, 210); //maybe change by action params ...
-           //$this->setTcpdfOptions(array('orientation'=>'L', ...);
+           $productPdf->setTemplate('productsheet1.pdf', 0, 0, 210); //maybe change by action params ...
+           //$productPdf->setTcpdfOptions(array('orientation'=>'L', ...);
         ...
           
     }
