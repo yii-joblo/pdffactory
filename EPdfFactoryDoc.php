@@ -114,6 +114,7 @@ abstract class EPdfFactoryDoc
         if(!$pdfFactory->isCached($name))
             $this->renderPdf();
 
+        $pdfFactory->setPdfObject($this->getPdf());
         return $pdfFactory->output($name,$dest);
     }
 

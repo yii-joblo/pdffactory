@@ -239,6 +239,16 @@ class EPdfFactory extends CApplicationComponent
     }
 
     /**
+     * Set the current pdf object
+     *
+     * @param mixed $pdfObject
+     */
+    public function setPdfObject($pdfObject)
+    {
+        $this->_pdfObject = $pdfObject;
+    }
+
+    /**
      * Get a WkHtmlToPdf instance from the extension pdfable
      *
      * @return null
