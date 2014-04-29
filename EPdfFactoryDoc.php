@@ -382,16 +382,20 @@ abstract class EPdfFactoryDoc
 
             if(!is_null($tplPageNo) && $tplPageNo>=0 && $tplPageNo<=$this->_tplPageCount)
             {
-                $tplIdx = $this->_pdf->useTemplate($tplPageNo, $this->_tplX, $this->_tplY, $this->_tplW,$this->_tplH);
-                if($tplIdx<$this->_tplPageCount)
-                    $tplIdx++;
+                $dim = $this->_pdf->useTemplate($tplPageNo, $this->_tplX, $this->_tplY, $this->_tplW,$this->_tplH);
+
+                if(isset($dim['w']) && $dim['w']>$this->_tplW)
+                    $this->_tplW=$dim['w'];
+
+                if(isset($dim['h']) && $dim['h']>$this->_tplH)
+                    $this->_tplH=$dim['h'];
+
+                if($this->_currentTplIndex<$this->_tplPageCount)
+                    $this->_currentTplIndex++;
                 else
-                    $tplIdx = 1;
-                return $this->_currentTplIndex = $tplIdx;
+                    $this->_currentTplIndex=1;
             }
         }
-
-        return null;
     }
 
 
