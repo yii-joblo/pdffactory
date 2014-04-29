@@ -15,6 +15,8 @@ The **feature of caching** of created pdf documents is supported.
 - Included: [FPDI](http://www.setasign.com/products/fpdi/about/ "")
 
 
+Download the latest pdfFactory version from [github](https://github.com/yii-joblo/pdffactory "").
+
 ##Installation
 
 1. Extract the files into protected/extensions/pdffactory
@@ -116,7 +118,7 @@ But if you need that, you can instantiate these classes like below.
 
 ###Using EPdfFactoryDoc
 
-Create predefined classes in the docClassesPath directory to output the pdf with a few lines in your controller action.
+Create predefined classes in the configured import path for your pdf docclasses to output the pdf with a few lines in your controller action.
 
 The minimum methods you have to override from the parent are 
 
@@ -288,11 +290,35 @@ If you want to **mail your generated pdf**:
 
 **Multipage pdf**
 
-If you want add **different products in one pdf**:
+If you want to render **different products into one pdf**:
 
-**Important:**
+~~~
+[php]
 
-**Don't override the renderPdf() method in this case, do the same inside another method (for example renderPage)**
+	class ProductPdf extends EPdfFactoryDoc
+	{
+
+     //render a single page for each model
+     protected function renderPage($model)
+     {
+        $this->addPage(); 
+	    $pdf = $this->getPdf();
+
+        ...
+        $pdf->Write(0, 'Article No. ' . $model->id);
+        ...
+     }
+
+   	 public function renderPdf()
+     {
+        foreach($this->getDataItem('models') as $model)        
+          $this->renderPage($model);      
+     }
+
+      ...
+	}
+~~~
+
 
 ~~~
 [php]
@@ -302,13 +328,7 @@ If you want add **different products in one pdf**:
         $models = Product::model()->findAll(); //findByAttributes ...
 
         $productPdf = ProductPdf::doc();
-
-        foreach($models as $model)
-        {
-          $productPdf->setData(array('model'=>$model));
-          $productPdf->renderPage(); //the implemented rendering method instead of overriding renderPdf()
-        }  
-
+        $productPdf->setData(array('models'=>$models));
         $productPdf->output('D');         
     }
 ~~~
@@ -437,6 +457,7 @@ Or a other action method (maybe in another controller)
 
 ##Changelog
 
+- 1.0.1 bugfixes: issues when using multiple doc classes for output; multipage FPDI templates
 - 1.0.0 initial release
 
 

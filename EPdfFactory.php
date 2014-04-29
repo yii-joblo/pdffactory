@@ -11,7 +11,7 @@
  * @license New BSD License
  * @category User Interface
  * @package joblo/pdffactory
- * @version 1.0.0
+ * @version 1.0.1
  */
 class EPdfFactory extends CApplicationComponent
 {
