@@ -11,7 +11,7 @@
  * @license New BSD License
  * @category User Interface
  * @package joblo/pdffactory
- * @version 1.0.1
+ * @version 1.0.0
  */
 class EPdfFactory extends CApplicationComponent
 {
@@ -74,14 +74,14 @@ class EPdfFactory extends CApplicationComponent
      * @see vendors/tcpdf.php TCPDF::__construct for details
      *
      * Default value = array(
-                    'format'=>'A4',
-                    'orientation'=>'P', //=Portrait or 'L' = landscape
-                    'unit'=>'mm', //measure unit: mm, cm, inch, or point
-                    'unicode'=>true,
-                    'encoding'=>'UTF-8',
-                    'diskcache'=>false,
-                    'pdfa'=>false,
-            )
+    'format'=>'A4',
+    'orientation'=>'P', //=Portrait or 'L' = landscape
+    'unit'=>'mm', //measure unit: mm, cm, inch, or point
+    'unicode'=>true,
+    'encoding'=>'UTF-8',
+    'diskcache'=>false,
+    'pdfa'=>false,
+    )
      *
      * @var array()
      */
@@ -212,10 +212,10 @@ class EPdfFactory extends CApplicationComponent
      */
     public function getFPDI($tcpdfOptions = array())
     {
-       if($this->_fpdi === null)
-       {
-           $this->createFPDI($tcpdfOptions);
-       }
+        if($this->_fpdi === null)
+        {
+            $this->createFPDI($tcpdfOptions);
+        }
 
         $this->_pdfObject = $this->_fpdi;
         return $this->_fpdi;
@@ -284,7 +284,14 @@ class EPdfFactory extends CApplicationComponent
             if(empty($this->_pdfObject))
                 throw new CHttpException('No pdf instance created: Call one of the methods createTCPDF(),createFPDI() before output.');
 
-            return $this->_pdfObject->output($name,$dest);
+            if(strpos($dest,'F')===0)
+            {
+                $name = $this->getPdfPath().DIRECTORY_SEPARATOR.$name;
+                $this->_pdfObject->output($name,$dest);
+                return is_file($name) ? $name : '';
+            }
+            else
+                return $this->_pdfObject->output($name,$dest);
         }
     }
 
@@ -482,8 +489,8 @@ class EPdfFactory extends CApplicationComponent
 
         if(!empty($url))
         {
-           if(is_array($url) || (is_string($url) && strpos($url,'://') === false))
-            $url = Yii::app()->createAbsoluteUrl($url,$urlParams);
+            if(is_array($url) || (is_string($url) && strpos($url,'://') === false))
+                $url = Yii::app()->createAbsoluteUrl($url,$urlParams);
         }
         else
         {
@@ -527,7 +534,7 @@ class EPdfFactory extends CApplicationComponent
                 unlink($file);
         }
         else
-          CFileHelper::removeDirectory($this->pdfPath);
+            CFileHelper::removeDirectory($this->pdfPath);
     }
 
 
@@ -538,7 +545,7 @@ class EPdfFactory extends CApplicationComponent
      */
     public function isCacheEnabled()
     {
-       return $this->cacheHours>=0;
+        return $this->cacheHours>=0;
     }
 
     /**
@@ -713,11 +720,5 @@ class EPdfFactory extends CApplicationComponent
     {
         return strpos($path,'.') !== false ? Yii::getPathOfAlias($path) : realpath($path);
     }
-
-
-
-
-
-
 
 }

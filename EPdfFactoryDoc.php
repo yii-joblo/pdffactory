@@ -21,7 +21,7 @@
  * @license New BSD License
  * @category User Interface
  * @package joblo/pdffactory
- * @version 1.0.1
+ * @version 1.0.0
  */
 abstract class EPdfFactoryDoc
 {
@@ -41,7 +41,7 @@ abstract class EPdfFactoryDoc
      */
     public function __construct()
     {
-       $this->init();
+        $this->init();
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class EPdfFactoryDoc
      */
     public function getPdfName()
     {
-       return 'document.pdf';
+        return 'document.pdf';
     }
 
     /**
@@ -77,15 +77,15 @@ abstract class EPdfFactoryDoc
      */
     public function renderPdf()
     {
-       /*
-        $this->addPage();
-        $pdf = $this->getPdf(); the instance of TCPDF or FPDI (extends TPDF)
-        $pdf->SetFontSize(18);
-         ...
-        $caption = $this->getDataItem('caption');
-        $pdf->write(0,$caption);
-         ...
-       */
+        /*
+         $this->addPage();
+         $pdf = $this->getPdf(); the instance of TCPDF or FPDI (extends TPDF)
+         $pdf->SetFontSize(18);
+          ...
+         $caption = $this->getDataItem('caption');
+         $pdf->write(0,$caption);
+          ...
+        */
     }
 
     /**
@@ -369,9 +369,10 @@ abstract class EPdfFactoryDoc
 
     /**
      * Called by addPage to assign the current page of the template.
+     * Increments the index of the current template page or set to 1.
+     * Checks the max width and height of the template.
      *
      * @param null $tplPageNo
-     * @return int|null
      */
     public function useTemplatePage($tplPageNo=null)
     {
@@ -397,6 +398,4 @@ abstract class EPdfFactoryDoc
             }
         }
     }
-
-
 }
