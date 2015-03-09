@@ -366,7 +366,7 @@ class EPdfFactory extends CApplicationComponent
         $opt = $this->getTcpdfOptions();
         if(!empty($tcpdfOptions))
             $opt=array_merge($opt,$tcpdfOptions);
-        $this->_tcpdf = new $class($opt['format'], $opt['orientation'],$opt['unit'],$opt['unicode'],$opt['encoding'],$opt['diskcache'],$opt['pdfa']);
+        $this->_tcpdf = new $class($opt['orientation'], $opt['unit'],$opt['format'],$opt['unicode'],$opt['encoding'],$opt['diskcache'],$opt['pdfa']);
         $this->_pdfObject = $this->_tcpdf;
         return $this->_tcpdf;
     }
@@ -385,7 +385,7 @@ class EPdfFactory extends CApplicationComponent
         $opt = $this->getTcpdfOptions();
         if(!empty($tcpdfOptions))
             $opt=array_merge($opt,$tcpdfOptions);
-        $this->_fpdi = new $class($opt['format'], $opt['orientation'],$opt['unit'],$opt['unicode'],$opt['encoding'],$opt['diskcache'],$opt['pdfa']);
+        $this->_fpdi = new $class($opt['orientation'], $opt['unit'],$opt['unit'],$opt['format'],$opt['encoding'],$opt['diskcache'],$opt['pdfa']);
         $this->_pdfObject = $this->_fpdi;
         return $this->_fpdi;
     }
